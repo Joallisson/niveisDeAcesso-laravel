@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\UserControlller;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,16 +15,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('login');
 });
 
-Route::middleware('admin')->group(function(){
+Route::post('auth', [UserControlller::class, 'auth'])->name('auth.user');
+
+Route::middleware(['admin'])->group(function(){
     Route::get('admin', function(){
         dd('Você é um Admin');
     });
 });
 
-Route::middleware('client')->group(function(){
+Route::middleware(['client'])->group(function(){
     Route::get('client', function(){
         dd('Você é um Cliente');
     });
